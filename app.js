@@ -5,4 +5,8 @@ app.get('/', function(request, response){
   response.send('OK');
 });
 
+app.get('/cities', function(request, response){
+  response.json('OK');
+});
+
 module.exports = app;

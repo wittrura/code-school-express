@@ -12,3 +12,17 @@ describe('Requests to the rooth path', function(){
       });
   });
 });
+
+describe('Listing cities on /cities', function(){
+  it('Returns 200 status code', function(done){
+     request(app)
+      .get('/cities')
+      .expect(200, done);
+  });
+
+  it('Returns JSON format', function(done){
+    request(app)
+      .get('/cities')
+      .expect('Content-Type', /json/, done);
+  });
+});

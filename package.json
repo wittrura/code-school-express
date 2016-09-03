@@ -4,7 +4,7 @@
   "description": "Code School watch us build app for express",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha -w test.js"
   },
   "repository": {
     "type": "git",
