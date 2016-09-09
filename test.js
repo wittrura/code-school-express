@@ -1,6 +1,11 @@
 var request = require('supertest');
 var app = require('./app');
 
+var redis = require('redis');
+var client = redis.createClient();
+client.select('test'.length);
+
+
 describe('Requests to the rooth path', function(){
   it('Returns a 200 status code', function(done){
     request(app)
@@ -43,17 +48,33 @@ describe('Listing cities on /cities', function(){
 
 describe('Creating new cities', function(){
 
+  before(function(){
+
+  });
+
   it('Returns a 201 status code', function(done){
     request(app)
       .post('/cities')
       .send('name=Springfield&description=where+the+simpsons+live')
-      .expect(201, done);
+      .expect(201)
+      .end(function(error, response){
+        if(error) return done(error);
+        client.flushdb();
+        done();
+      });
   });
+
 
   it('Returns the city name', function(done){
     request(app)
       .post('/cities')
       .send('name=Springfield&description=where+the+simpsons+live')
-      .expect(/springfield/i, done);
+      .expect(/springfield/i)
+      .end(function(error, response){
+        if(error) return done(error);
+        client.flushdb();
+        done();
+      });
   });
+
 });
