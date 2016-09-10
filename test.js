@@ -49,7 +49,6 @@ describe('Listing cities on /cities', function(){
 describe('Creating new cities', function(){
 
   before(function(){
-
   });
 
   it('Returns a 201 status code', function(done){
@@ -76,5 +75,25 @@ describe('Creating new cities', function(){
         done();
       });
   });
+});
 
+describe('Deleting cities', function(){
+  before(function(){
+    client.hset('cities', 'Banana', 'a tasty fruit');
+  });
+
+  after(function(){
+    client.flushdb();
+  })
+
+
+  it('Returns a 204 status code', function(done){
+    request(app)
+      .delete('/cities/Banana')
+      .expect(204)
+      .end(function(error, response){
+        if(error) return done(error);
+        done();
+      });
+  });
 });

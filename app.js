@@ -20,7 +20,6 @@ if (process.env.REDISTOGO_URL) {
 
 // client.select((process.env.NODE_ENV || 'development').length);
 // End Redis Connection
-
 client.hset('cities', 'Lotopia', 'Description');
 client.hset('cities', 'Caspiana', 'Description');
 client.hset('cities', 'Indigo', 'Description');
@@ -40,4 +39,10 @@ app.post('/cities', urlEncode, function(request, response){
   });
 });
 
+app.delete('/cities/:name', function(request, response){
+  client.hdel('cities', request.params.name, function(error){
+    if(error) throw error;
+    response.sendStatus(204);
+  });
+});
 module.exports = app;
