@@ -44,6 +44,13 @@ describe('Listing cities on /cities', function(){
       .get('/cities')
       .expect(JSON.stringify(['Lotopia', 'Caspiana', 'Indigo']), done);
   });
+
+  it('Validates city name and description', function(done){
+    request(app)
+      .post('/cities')
+      .send('name=&description=')
+      .expect(400, done);
+  });
 });
 
 describe('Creating new cities', function(){
